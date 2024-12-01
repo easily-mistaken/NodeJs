@@ -8,7 +8,9 @@ const myServer = http.createServer(
   (req: IncomingMessage, res: ServerResponse) => {
     if (req.url === "/favicon.ico") return res.end();
 
-    const log = `${Date.now()} : ${req.url} : New Request Recieved \n`;
+    const log = `${Date.now()} : ${req.url}: ${
+      req.method
+    } : New Request Recieved \n`;
     const myUrl = url.parse(req.url, true);
     console.log(myUrl);
 
@@ -29,6 +31,14 @@ const myServer = http.createServer(
           const search = myUrl.query.search_query;
           console.log(search);
           res.end("Here are your result for " + search);
+          break;
+
+        case "/signup":
+          if (req.method == "GET") res.end("This is a signup From");
+          else if (req.method == "POST") {
+            //DB Query
+            res.end("Success");
+          }
           break;
 
         default:
